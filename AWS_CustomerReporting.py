@@ -5,11 +5,23 @@ from io import BytesIO
 s3 = boto3.client('s3')
 ses = boto3.client('ses')
 
+def get_ssm_param(ssm_param_name, region_name="eu-central-1", WithDecryption=True):
+    
+    ssm_client = boto3.client("ssm", region_name=region_name) #s.environ["AWS_REGION"]
+    response = ssm_client.get_parameter(
+        Name=ssm_param_name,
+        WithDecryption=WithDecryption  # Set to True if the parameter is a SecureString
+    )
+    parameter_value = response["Parameter"]["Value"]
+    return parameter_value
+    
+
 def lambda_handler(event, context):
     # --- 1. CONFIGURATION ---
     BUCKET_NAME = "in-customer-reports" 
     EXCEL_FILE_KEY = 'Customer_IDS.xlsx' 
     SENDER_EMAIL = "accountsreceivables-IN@candi.solar"
+    GDRIVE_SERVICE_ACCOUNT_KEY = get_ssm_param("/general/AMGDriveAccountKey") #JSON string
 
     # --- 2. LOAD THE EXCEL FILE ---
     try:
@@ -73,3 +85,4 @@ def send_report_email(to_address, from_address, filename):
         }
 
     )
+
