@@ -20,7 +20,7 @@ def lambda_handler(event, context):
     # --- 1. CONFIGURATION ---
     BUCKET_NAME = "in-customer-reports" 
     EXCEL_FILE_KEY = 'Customer_IDS.xlsx' 
-    SENDER_EMAIL = "accountsreceivables-IN@candi.solar"
+    SENDER_EMAIL = "accountsreceivables-in@candi.solar"
     GDRIVE_SERVICE_ACCOUNT_KEY = get_ssm_param("/general/AMGDriveAccountKey") #JSON string
 
     # --- 2. LOAD THE EXCEL FILE ---
@@ -85,4 +85,5 @@ def send_report_email(to_address, from_address, filename):
         }
 
     )
+
 
