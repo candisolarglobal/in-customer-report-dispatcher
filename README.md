@@ -17,3 +17,4 @@ Every quarter, they are to be sent to the customer via mail. This repo aims to p
 5.  ***IAM*** - Identity and Access Management - Used for authentication purposes.
 
 ---
+Python code for an aws lambda function to dispatch india customer reports on a quarterly basis via email
